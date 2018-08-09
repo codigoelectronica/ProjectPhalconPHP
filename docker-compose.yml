@@ -1,0 +1,26 @@
+#Proyecto Phalcon PHP
+version: '2'
+services:
+  #Creamos el servicio de PHP en donde configuraremos 
+  #el entorno de trabajo para phalconphp
+  php:
+    build: ./php
+    container_name: ProjectPhalconPHP_php
+    ports:
+      - '80:80'
+    volumes:
+      - ./code:/var/www/html
+    links:
+      - mysql
+  #Creamos el servicio de mysql, motor de nuestra base de datos
+  mysql:
+    image: mysql:5.7.22
+    container_name: ProjectPhalconPHP_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: docker
+      MYSQL_USER: user
+      MYSQL_PASSWORD: secret
+    volumes:
+      - ./mysql/backup:/backup
+      - ./mysql/db:/var/lib/mysql
